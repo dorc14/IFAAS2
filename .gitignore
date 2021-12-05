@@ -1,5 +1,4 @@
-IFAS/.idea/vcs.xml
-IFAS/.idea/inspectionProfiles/profiles_settings.xml
-IFAS/.idea/misc.xml
-IFAS/.idea/modules.xml
+IFAS/.idea/
 IFAS/__pycache__
+IFAS/API/__pycache__
+IFAS/BL/__pycache__
