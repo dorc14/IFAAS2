@@ -2,9 +2,9 @@ from DAL import IFDAL
 from BL import IfHistoryBL
 import requests
 import validators
-from tasks import getTransaction
+from tasks.transactionTasks import get_transaction
 import re
-from Config.addones import transactionStatus, externalIfAssUrl, ifAssIfUrl, executeIfAssUrl, makeJsonBody
+from Config.addones import Status, externalIfAssUrl, ifAssIfUrl, executeIfAssUrl, makeJsonBody
 from logger import logger
 
 
@@ -27,7 +27,7 @@ def createIf(name: str,properties: str, url: str = None) -> dict:
     requestBody = makeJsonBody(body)
     if checkIfValidation(name):
         transactionId = requests.post(externalIfAssUrl, json=requestBody).json()["transactionId"]
-        result = getTransaction.delay(transactionId)
+        result = get_transaction.delay(transactionId)
         transaction = result.get()
         urlBody = checkTransactionStatus(transaction, name, properties)
         WebhookToUrl(url, urlBody)
@@ -59,7 +59,7 @@ def WebhookToUrl(url: str, body: dict):
         logger.warning("Exception has occured while sending the request:","Wrong Url pls Change")
 
 def checkTransactionStatus(transaction: dict, name:str, properties:str) -> dict:
-    if transaction['status'] == transactionStatus.SUCCEEDED.name:
+    if transaction['status'] == Status.SUCCEEDED.name:
         urlBody = ifTransactionSucceeded(transaction, name, properties)
     else:
         urlBody = ifTransactionFailed(transaction)

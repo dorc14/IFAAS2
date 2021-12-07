@@ -8,7 +8,7 @@ ifAssUrl = "http://127.0.0.1:5000/"
 ifAssIfUrl = ifAssUrl + 'if/'
 executeIfAssUrl = "/execute"
 
-class transactionStatus(Enum):
+class Status(Enum):
     SUCCEEDED = "SUCCEEDED"
     PENDING = "PENDING"
     FAILED = "FAILED"
